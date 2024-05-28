@@ -1,11 +1,11 @@
-import React from "react";
-import { useEffect } from "react";
-import { Container, Row, Col } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import { cartActions } from "../action/cartAction";
-import CartProductCard from "../component/CartProductCard";
-import OrderReceipt from "../component/OrderReceipt";
-import "../style/cart.style.css";
+import React from 'react';
+import { useEffect } from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { cartActions } from '../action/cartAction';
+import CartProductCard from '../component/CartProductCard';
+import OrderReceipt from '../component/OrderReceipt';
+import '../style/cart.style.css';
 
 const CartPage = () => {
   const dispatch = useDispatch();

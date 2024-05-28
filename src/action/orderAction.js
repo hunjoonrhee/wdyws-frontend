@@ -1,7 +1,7 @@
-import api from "../utils/api";
-import * as types from "../constants/order.constants";
-import { cartActions } from "./cartAction";
-import { commonUiActions } from "./commonUiAction";
+import api from '../utils/api';
+import * as types from '../constants/order.constants';
+import { cartActions } from './cartAction';
+import { commonUiActions } from './commonUiAction';
 
 const createOrder = (payload) => async (dispatch) => {};
 

@@ -1,4 +1,4 @@
-import * as types from "../constants/product.constants";
+import * as types from '../constants/product.constants';
 const initialState = {};
 
 function productReducer(state = initialState, action) {

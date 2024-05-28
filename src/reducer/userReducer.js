@@ -1,4 +1,4 @@
-import * as types from "../constants/user.constants";
+import * as types from '../constants/user.constants';
 const initialState = {};
 
 function userReducer(state = initialState, action) {

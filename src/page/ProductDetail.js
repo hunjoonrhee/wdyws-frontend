@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { Container, Row, Col, Button, Dropdown } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import { productActions } from "../action/productAction";
-import { ColorRing } from "react-loader-spinner";
-import { cartActions } from "../action/cartAction";
-import { commonUiActions } from "../action/commonUiAction";
-import { currencyFormat } from "../utils/number";
-import "../style/productDetail.style.css";
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Container, Row, Col, Button, Dropdown } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { productActions } from '../action/productAction';
+import { ColorRing } from 'react-loader-spinner';
+import { cartActions } from '../action/cartAction';
+import { commonUiActions } from '../action/commonUiAction';
+import { currencyFormat } from '../utils/number';
+import '../style/productDetail.style.css';
 
 const ProductDetail = () => {
   const dispatch = useDispatch();
 
-  const [size, setSize] = useState("");
+  const [size, setSize] = useState('');
   const { id } = useParams();
   const [sizeError, setSizeError] = useState(false);
 
@@ -54,24 +54,20 @@ const ProductDetail = () => {
             className="drop-down size-drop-down"
             title={size}
             align="start"
-            onSelect={(value) => selectSize(value)}
-          >
+            onSelect={(value) => selectSize(value)}>
             <Dropdown.Toggle
               className="size-drop-down"
-              variant={sizeError ? "outline-danger" : "outline-dark"}
+              variant={sizeError ? 'outline-danger' : 'outline-dark'}
               id="dropdown-basic"
-              align="start"
-            >
-              {size === "" ? "사이즈 선택" : size.toUpperCase()}
+              align="start">
+              {size === '' ? '사이즈 선택' : size.toUpperCase()}
             </Dropdown.Toggle>
 
             <Dropdown.Menu className="size-drop-down">
               <Dropdown.Item>M</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
-          <div className="warning-message">
-            {sizeError && "사이즈를 선택해주세요."}
-          </div>
+          <div className="warning-message">{sizeError && '사이즈를 선택해주세요.'}</div>
           <Button variant="dark" className="add-button" onClick={addItemToCart}>
             추가
           </Button>

@@ -1,4 +1,4 @@
-import * as types from "../constants/order.constants";
+import * as types from '../constants/order.constants';
 
 const initialState = {};
 

@@ -1,10 +1,10 @@
-import React from "react";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import { Row, Col, Form } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useDispatch } from "react-redux";
-import { cartActions } from "../action/cartAction";
-import { currencyFormat } from "../utils/number";
+import React from 'react';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { Row, Col, Form } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useDispatch } from 'react-redux';
+import { cartActions } from '../action/cartAction';
+import { currencyFormat } from '../utils/number';
 
 const CartProductCard = ({ item }) => {
   const dispatch = useDispatch();
@@ -30,11 +30,7 @@ const CartProductCard = ({ item }) => {
           <div className="display-flex space-between">
             <h3>리넨셔츠</h3>
             <button className="trash-button">
-              <FontAwesomeIcon
-                icon={faTrash}
-                width={24}
-                onClick={() => deleteCart("hard_code")}
-              />
+              <FontAwesomeIcon icon={faTrash} width={24} onClick={() => deleteCart('hard_code')} />
             </button>
           </div>
 
@@ -45,12 +41,7 @@ const CartProductCard = ({ item }) => {
           <div>Total: ₩ 45,000</div>
           <div>
             Quantity:
-            <Form.Select
-              onChange={(event) => handleQtyChange()}
-              required
-              defaultValue={1}
-              className="qty-dropdown"
-            >
+            <Form.Select onChange={(event) => handleQtyChange()} required defaultValue={1} className="qty-dropdown">
               <option value={1}>1</option>
               <option value={2}>2</option>
               <option value={3}>3</option>
