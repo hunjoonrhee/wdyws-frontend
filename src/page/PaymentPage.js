@@ -77,12 +77,7 @@ const PaymentPage = () => {
 
                 <Form.Group className="mb-3" controlId="formGridAddress2">
                   <Form.Label>주소</Form.Label>
-                  <Form.Control
-                    placeholder="Apartment, studio, or floor"
-                    onChange={handleFormChange}
-                    required
-                    name="address"
-                  />
+                  <Form.Control placeholder="Apartment, studio, or floor" onChange={handleFormChange} required name="address" />
                 </Form.Group>
 
                 <Row className="mb-3">

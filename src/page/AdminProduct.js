@@ -51,12 +51,7 @@ const AdminProduct = () => {
     <div className="locate-center">
       <Container>
         <div className="mt-2">
-          <SearchBox
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-            placeholder="제품 이름으로 검색"
-            field="name"
-          />
+          <SearchBox searchQuery={searchQuery} setSearchQuery={setSearchQuery} placeholder="제품 이름으로 검색" field="name" />
         </div>
         <Button className="mt-2 mb-2" onClick={handleClickNewItem}>
           Add New Item +

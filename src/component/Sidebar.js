@@ -38,12 +38,7 @@ const Sidebar = () => {
           <img width={80} src="/image/hm-logo.png" alt="hm-logo.png" />
           <Navbar.Brand href="#"></Navbar.Brand>
           <Navbar.Toggle aria-controls={`offcanvasNavbar-expand`} onClick={() => setShow(true)} />
-          <Navbar.Offcanvas
-            id={`offcanvasNavbar-expand`}
-            aria-labelledby={`offcanvasNavbarLabel-expand`}
-            placement="start"
-            className="sidebar"
-            show={show}>
+          <Navbar.Offcanvas id={`offcanvasNavbar-expand`} aria-labelledby={`offcanvasNavbarLabel-expand`} placement="start" className="sidebar" show={show}>
             <Offcanvas.Header closeButton></Offcanvas.Header>
             <Offcanvas.Body>{NavbarContent()}</Offcanvas.Body>
           </Navbar.Offcanvas>

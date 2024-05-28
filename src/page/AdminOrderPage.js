@@ -54,12 +54,7 @@ const AdminOrderPage = () => {
     <div className="locate-center">
       <Container>
         <div className="mt-2 display-center mb-2">
-          <SearchBox
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-            placeholder="오더번호"
-            field="ordernum"
-          />
+          <SearchBox searchQuery={searchQuery} setSearchQuery={setSearchQuery} placeholder="오더번호" field="ordernum" />
         </div>
 
         <OrderTable header={tableHeader} data={orderList} openEditForm={openEditForm} />

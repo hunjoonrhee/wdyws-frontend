@@ -50,16 +50,8 @@ const ProductDetail = () => {
           <div className="product-info">₩ 45,000</div>
           <div className="product-info">샘플설명</div>
 
-          <Dropdown
-            className="drop-down size-drop-down"
-            title={size}
-            align="start"
-            onSelect={(value) => selectSize(value)}>
-            <Dropdown.Toggle
-              className="size-drop-down"
-              variant={sizeError ? 'outline-danger' : 'outline-dark'}
-              id="dropdown-basic"
-              align="start">
+          <Dropdown className="drop-down size-drop-down" title={size} align="start" onSelect={(value) => selectSize(value)}>
+            <Dropdown.Toggle className="size-drop-down" variant={sizeError ? 'outline-danger' : 'outline-dark'} id="dropdown-basic" align="start">
               {size === '' ? '사이즈 선택' : size.toUpperCase()}
             </Dropdown.Toggle>
 

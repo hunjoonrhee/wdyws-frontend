@@ -95,9 +95,7 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
 
   return (
     <Modal show={showDialog} onHide={handleClose}>
-      <Modal.Header closeButton>
-        {mode === 'new' ? <Modal.Title>Create New Product</Modal.Title> : <Modal.Title>Edit Product</Modal.Title>}
-      </Modal.Header>
+      <Modal.Header closeButton>{mode === 'new' ? <Modal.Title>Create New Product</Modal.Title> : <Modal.Title>Edit Product</Modal.Title>}</Modal.Header>
 
       <Form className="form-container" onSubmit={handleSubmit}>
         <Row className="mb-3">
@@ -114,15 +112,7 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
 
         <Form.Group className="mb-3" controlId="description">
           <Form.Label>Description</Form.Label>
-          <Form.Control
-            type="string"
-            placeholder="Description"
-            as="textarea"
-            onChange={handleChange}
-            rows={3}
-            value={formData.description}
-            required
-          />
+          <Form.Control type="string" placeholder="Description" as="textarea" onChange={handleChange} rows={3} value={formData.description} required />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="stock">
@@ -135,19 +125,12 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
             {stock.map((item, index) => (
               <Row key={index}>
                 <Col sm={4}>
-                  <Form.Select
-                    onChange={(event) => handleSizeChange(event.target.value, index)}
-                    required
-                    defaultValue={item[0] ? item[0].toLowerCase() : ''}>
+                  <Form.Select onChange={(event) => handleSizeChange(event.target.value, index)} required defaultValue={item[0] ? item[0].toLowerCase() : ''}>
                     <option value="" disabled selected hidden>
                       Please Choose...
                     </option>
                     {SIZE.map((item, index) => (
-                      <option
-                        invalid="true"
-                        value={item.toLowerCase()}
-                        disabled={stock.some((size) => size[0] === item.toLowerCase())}
-                        key={index}>
+                      <option invalid="true" value={item.toLowerCase()} disabled={stock.some((size) => size[0] === item.toLowerCase())} key={index}>
                         {item}
                       </option>
                     ))}

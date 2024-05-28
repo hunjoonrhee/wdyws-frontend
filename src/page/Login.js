@@ -16,7 +16,6 @@ const Login = () => {
 
   const loginWithEmail = (event) => {
     event.preventDefault();
-    //이메일,패스워드를 가지고 백엔드로 보내기
   };
 
   const handleGoogleLogin = async (googleData) => {
@@ -37,29 +36,19 @@ const Login = () => {
         <Form className="login-form" onSubmit={loginWithEmail}>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
-            <Form.Control
-              type="email"
-              placeholder="Enter email"
-              required
-              onChange={(event) => setEmail(event.target.value)}
-            />
+            <Form.Control type="email" placeholder="Enter email" required value={email} onChange={(event) => setEmail(event.target.value)} />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Label>Password</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="Password"
-              required
-              onChange={(event) => setPassword(event.target.value)}
-            />
+            <Form.Control type="password" placeholder="Password" required value={password} onChange={(event) => setPassword(event.target.value)} />
           </Form.Group>
           <div className="display-space-between login-button-area">
             <Button variant="danger" type="submit">
               Login
             </Button>
             <div>
-              아직 계정이 없으세요?<Link to="/register">회원가입 하기</Link>{' '}
+              Don't have an account yet? <Link to="/register">Sign Up</Link>{' '}
             </div>
           </div>
 

@@ -67,21 +67,21 @@ const Navbar = ({ user }) => {
             {user ? (
               <div onClick={logout} className="nav-icon">
                 <FontAwesomeIcon icon={faUser} />
-                {!isMobile && <span style={{ cursor: 'pointer' }}>로그아웃</span>}
+                {!isMobile && <span style={{ cursor: 'pointer' }}>Sign Out</span>}
               </div>
             ) : (
               <div onClick={() => navigate('/login')} className="nav-icon">
                 <FontAwesomeIcon icon={faUser} />
-                {!isMobile && <span style={{ cursor: 'pointer' }}>로그인</span>}
+                {!isMobile && <span style={{ cursor: 'pointer' }}>Sign In</span>}
               </div>
             )}
             <div onClick={() => navigate('/cart')} className="nav-icon">
               <FontAwesomeIcon icon={faShoppingBag} />
-              {!isMobile && <span style={{ cursor: 'pointer' }}>{`쇼핑백(${cartItemCount || 0})`}</span>}
+              {!isMobile && <span style={{ cursor: 'pointer' }}>{`Cart (${cartItemCount || 0})`}</span>}
             </div>
             <div onClick={() => navigate('/account/purchase')} className="nav-icon">
               <FontAwesomeIcon icon={faBox} />
-              {!isMobile && <span style={{ cursor: 'pointer' }}>내 주문</span>}
+              {!isMobile && <span style={{ cursor: 'pointer' }}>My Order</span>}
             </div>
             {isMobile && (
               <div className="nav-icon" onClick={() => setShowSearchBox(true)}>

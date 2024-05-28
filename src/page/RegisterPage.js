@@ -14,22 +14,30 @@ const RegisterPage = () => {
     policy: false,
   });
   const navigate = useNavigate();
-  const [passwordError, setPasswordError] = useState('');
+  const [passwordError, setPasswordError] = useState(false);
   const [policyError, setPolicyError] = useState(false);
   const error = useSelector((state) => state.user.error);
 
   const register = (event) => {
     event.preventDefault();
-    // 비번 중복확인 일치하는지 확인
-    // 이용약관에 체크했는지 확인
-    // FormData에 있는 값을 가지고 백엔드로 넘겨주기
-    //성공후 로그인 페이지로 넘어가기
+    console.log(formData);
+    formData.password !== formData.confirmPassword && setPasswordError(true);
+    !formData.policy && setPolicyError(true);
+    dispatch(userActions.registerUser({ email: formData.email, name: formData.name, password: formData.password }, navigate));
   };
 
-  const handleChange = (event) => {
-    event.preventDefault();
-    // 값을 읽어서 FormData에 넣어주기
-  };
+  // const handleChange = (event) => {
+  //   event.preventDefault();
+  //   console.log(event);
+  //   setFormData({
+  //     email: event.target.value,
+  //     name: event.target.value,
+  //     password: event.target.value,
+  //     confirmPassword: event.target.value,
+  //     policy: event.target.checked,
+  //   });
+  //   console.log(formData);
+  // };
 
   return (
     <Container className="register-area">
@@ -43,15 +51,36 @@ const RegisterPage = () => {
       <Form onSubmit={register}>
         <Form.Group className="mb-3">
           <Form.Label>Email</Form.Label>
-          <Form.Control type="email" id="email" placeholder="Enter email" onChange={handleChange} required />
+          <Form.Control
+            type="email"
+            id="email"
+            placeholder="Enter email"
+            value={formData.email}
+            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            required
+          />
         </Form.Group>
         <Form.Group className="mb-3">
           <Form.Label>Name</Form.Label>
-          <Form.Control type="text" id="name" placeholder="Enter name" onChange={handleChange} required />
+          <Form.Control
+            type="text"
+            id="name"
+            placeholder="Enter name"
+            value={formData.name}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            required
+          />
         </Form.Group>
         <Form.Group className="mb-3">
           <Form.Label>Password</Form.Label>
-          <Form.Control type="password" id="password" placeholder="Password" onChange={handleChange} required />
+          <Form.Control
+            type="password"
+            id="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+            required
+          />
         </Form.Group>
         <Form.Group className="mb-3">
           <Form.Label>Confirm Password</Form.Label>
@@ -59,7 +88,8 @@ const RegisterPage = () => {
             type="password"
             id="confirmPassword"
             placeholder="Confirm Password"
-            onChange={handleChange}
+            value={formData.confirmPassword}
+            onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
             required
             isInvalid={passwordError}
           />
@@ -70,7 +100,8 @@ const RegisterPage = () => {
             type="checkbox"
             label="이용약관에 동의합니다"
             id="policy"
-            onChange={handleChange}
+            onChange={(e) => setFormData({ ...formData, policy: e.target.checked })}
+            value={formData.policy}
             isInvalid={policyError}
             checked={formData.policy}
           />

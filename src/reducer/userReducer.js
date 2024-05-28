@@ -1,5 +1,7 @@
 import * as types from '../constants/user.constants';
-const initialState = {};
+const initialState = {
+  user: null,
+};
 
 function userReducer(state = initialState, action) {
   const { type, payload } = action;
