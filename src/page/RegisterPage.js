@@ -16,7 +16,7 @@ const RegisterPage = () => {
   const navigate = useNavigate();
   const [passwordError, setPasswordError] = useState('');
   const [policyError, setPolicyError] = useState(false);
-  const error = useSelector((state) => state.user.error);
+  const { registerError } = useSelector((state) => state.user);
 
   const register = (event) => {
     event.preventDefault();
@@ -37,10 +37,10 @@ const RegisterPage = () => {
 
   return (
     <Container className="register-area">
-      {error && (
+      {registerError && (
         <div>
           <Alert variant="danger" className="error-message">
-            {error}
+            {registerError}
           </Alert>
         </div>
       )}

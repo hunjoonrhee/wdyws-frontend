@@ -12,7 +12,7 @@ const Login = () => {
   const { user } = useSelector((state) => state.user);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const error = useSelector((state) => state.user.error);
+  const { logInError } = useSelector((state) => state.user);
 
   const loginWithEmail = (event) => {
     event.preventDefault();
@@ -33,9 +33,9 @@ const Login = () => {
   return (
     <>
       <Container className="login-area">
-        {error && (
+        {logInError && (
           <div className="error-message">
-            <Alert variant="danger">{error}</Alert>
+            <Alert variant="danger">{logInError}</Alert>
           </div>
         )}
         <Form className="login-form" onSubmit={loginWithEmail}>
