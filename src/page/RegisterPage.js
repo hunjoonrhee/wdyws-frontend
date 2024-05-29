@@ -20,7 +20,6 @@ const RegisterPage = () => {
 
   const register = (event) => {
     event.preventDefault();
-    console.log(formData);
     formData.password !== formData.confirmPassword && setPasswordError(true);
     !formData.policy && setPolicyError(true);
     dispatch(userActions.registerUser({ email: formData.email, name: formData.name, password: formData.password }, navigate));

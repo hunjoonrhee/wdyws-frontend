@@ -4,7 +4,7 @@ const LOCAL_BACKEND = process.env.REACT_APP_LOCAL_BACKEND;
 // const PROD_BACKEND = process.env.REACT_APP_PROD_BACKEND;
 const BACKEND_PROXY = process.env.REACT_APP_BACKEND_PROXY;
 const backendURL = process.env.NODE_ENV === 'production' ? BACKEND_PROXY : LOCAL_BACKEND;
-
+console.log(backendURL);
 const api = axios.create({
   baseURL: backendURL + '/api',
   headers: {
