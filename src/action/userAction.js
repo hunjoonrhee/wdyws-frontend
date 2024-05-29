@@ -14,6 +14,8 @@ const registerUser =
     try {
       dispatch({ type: types.REGISTER_USER_REQUEST });
       const response = await api.post('/user', { email, name, password });
+      console.log(response);
+      console.log('angekommen???');
       dispatch({ type: types.REGISTER_USER_SUCCESS });
       dispatch(commonUiActions.showToastMessage('Sign up succeed!', 'success'));
       navigate('/login');
