@@ -18,9 +18,7 @@ const api = axios.create({
 api.interceptors.request.use(
   (request) => {
     console.log('Starting Request', request);
-    if (sessionStorage.getItem('token')) {
-      request.headers.authorization = `Bearer ${sessionStorage.getItem('token')}`;
-    }
+    request.headers.authorization = `Bearer ${sessionStorage.getItem('token')}`;
     return request;
   },
   function (error) {

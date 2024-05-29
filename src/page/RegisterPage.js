@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Container, Form, Button, Alert } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
@@ -14,29 +14,27 @@ const RegisterPage = () => {
     policy: false,
   });
   const navigate = useNavigate();
-  const [passwordError, setPasswordError] = useState(false);
+  const [passwordError, setPasswordError] = useState('');
   const [policyError, setPolicyError] = useState(false);
   const error = useSelector((state) => state.user.error);
 
   const register = (event) => {
     event.preventDefault();
-    formData.password !== formData.confirmPassword && setPasswordError(true);
-    !formData.policy && setPolicyError(true);
+    console.log(formData);
+    if (formData.password !== formData.confirmPassword) {
+      return;
+    }
+    if (formData.policy === false) {
+      setPolicyError(true);
+      return;
+    }
+
+    setPasswordError('');
+    setPolicyError(false);
     dispatch(userActions.registerUser({ email: formData.email, name: formData.name, password: formData.password }, navigate));
   };
 
-  // const handleChange = (event) => {
-  //   event.preventDefault();
-  //   console.log(event);
-  //   setFormData({
-  //     email: event.target.value,
-  //     name: event.target.value,
-  //     password: event.target.value,
-  //     confirmPassword: event.target.value,
-  //     policy: event.target.checked,
-  //   });
-  //   console.log(formData);
-  // };
+  const isPasswordMatched = formData.password === formData.confirmPassword;
 
   return (
     <Container className="register-area">
@@ -89,10 +87,9 @@ const RegisterPage = () => {
             placeholder="Confirm Password"
             value={formData.confirmPassword}
             onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-            required
-            isInvalid={passwordError}
+            isInvalid={!isPasswordMatched}
           />
-          <Form.Control.Feedback type="invalid">{passwordError}</Form.Control.Feedback>
+          {!isPasswordMatched && formData.confirmPassword && <h6 style={{ color: 'red' }}>password doesn't match!</h6>}
         </Form.Group>
         <Form.Group className="mb-3">
           <Form.Check
@@ -101,8 +98,9 @@ const RegisterPage = () => {
             id="policy"
             onChange={(e) => setFormData({ ...formData, policy: e.target.checked })}
             value={formData.policy}
-            isInvalid={policyError}
             checked={formData.policy}
+            required
+            isInvalid={policyError}
           />
         </Form.Group>
         <Button variant="danger" type="submit">
