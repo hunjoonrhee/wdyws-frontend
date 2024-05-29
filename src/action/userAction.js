@@ -36,7 +36,7 @@ const registerUser =
       dispatch(commonUiActions.showToastMessage('Sign up succeed!', 'success'));
       navigate('/login');
     } catch (err) {
-      dispatch({ type: types.REGISTER_USER_FAIL, payload: err.error });
+      dispatch({ type: types.REGISTER_USER_FAIL, payload: err });
       console.error(err);
     }
   };
