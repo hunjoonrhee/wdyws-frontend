@@ -2,7 +2,24 @@ import api from '../utils/api';
 import * as types from '../constants/user.constants';
 import { commonUiActions } from './commonUiAction';
 import * as commonTypes from '../constants/commonUI.constants';
-const loginWithToken = () => async (dispatch) => {};
+const loginWithToken = () => async (dispatch) => {
+  try {
+    const token = sessionStorage.getItem('token');
+    if (!token) {
+      return;
+    }
+    dispatch({ type: types.LOGIN_WITH_TOKEN_REQUEST });
+    const response = await api.get('/user/me');
+    if (response.status !== 200) {
+      dispatch({ type: types.LOGIN_WITH_TOKEN_FAIL, payload: response.error });
+    }
+    dispatch({ type: types.LOGIN_WITH_TOKEN_SUCCESS, payload: response.data });
+  } catch (error) {
+    dispatch({ type: types.LOGIN_WITH_TOKEN_FAIL });
+    dispatch(logout());
+    console.log(error);
+  }
+};
 const loginWithEmail = (payload) => async (dispatch) => {
   try {
     dispatch({ type: types.LOGIN_REQUEST });

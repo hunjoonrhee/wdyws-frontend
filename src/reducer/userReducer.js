@@ -17,6 +17,15 @@ function userReducer(state = initialState, action) {
         ...state,
         logInError: action.payload,
       };
+    case types.LOGIN_WITH_TOKEN_SUCCESS:
+      return {
+        ...state,
+        user: action.payload,
+      };
+    case types.LOGIN_WITH_TOKEN_FAIL:
+      return {
+        ...state,
+      };
     case types.LOGOUT:
       return {
         ...state,
