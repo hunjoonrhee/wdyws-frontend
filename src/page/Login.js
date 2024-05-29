@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Form, Button, Alert } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,15 +16,20 @@ const Login = () => {
 
   const loginWithEmail = (event) => {
     event.preventDefault();
+    const payload = { email: email, password: password };
+    dispatch(userActions.loginWithEmail(payload));
   };
 
   const handleGoogleLogin = async (googleData) => {
     // 구글로 로그인 하기
   };
 
-  if (user) {
-    navigate('/');
-  }
+  useEffect(() => {
+    if (user) {
+      navigate('/');
+    }
+  }, [user]);
+
   return (
     <>
       <Container className="login-area">

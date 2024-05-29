@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import { Container, Form, Button, Alert } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
@@ -20,7 +20,6 @@ const RegisterPage = () => {
 
   const register = (event) => {
     event.preventDefault();
-    console.log(formData);
     if (formData.password !== formData.confirmPassword) {
       return;
     }
