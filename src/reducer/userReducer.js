@@ -36,6 +36,11 @@ function userReducer(state = initialState, action) {
         ...state,
         registerError: action.payload,
       };
+    case types.REGISTER_USER_SUCCESS:
+      return {
+        ...state,
+        logInError: null,
+      };
     default:
       return state;
   }
