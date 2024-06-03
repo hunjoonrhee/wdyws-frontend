@@ -7,6 +7,7 @@ import { CATEGORY, STATUS, SIZE } from '../constants/product.constants';
 import '../style/adminProduct.style.css';
 import * as types from '../constants/product.constants';
 import { commonUiActions } from '../action/commonUiAction';
+import PropTypes from 'prop-types';
 
 const InitialFormData = {
   name: '',
@@ -20,46 +21,74 @@ const InitialFormData = {
 };
 const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
   const selectedProduct = useSelector((state) => state.product.selectedProduct);
-  const { error } = useSelector((state) => state.product);
   const [formData, setFormData] = useState(mode === 'new' ? { ...InitialFormData } : selectedProduct);
   const [stock, setStock] = useState([]);
   const dispatch = useDispatch();
   const [stockError, setStockError] = useState(false);
+  const [priceError, setPriceError] = useState(false);
   const handleClose = () => {
     //모든걸 초기화시키고;
+    setFormData({
+      name: '',
+      sku: '',
+      stock: {},
+      image: '',
+      description: '',
+      category: [],
+      status: 'active',
+      price: 0,
+    });
     // 다이얼로그 닫아주기
+    setShowDialog(false);
   };
+
+  useEffect(() => {
+    stock.length !== 0 && setStockError(false);
+    formData.price !== 0 && setPriceError(false);
+  }, [stock, formData]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    //재고를 입력했는지 확인, 아니면 에러
-    // 재고를 배열에서 객체로 바꿔주기
-    // [['M',2]] 에서 {M:2}로
+    stock.length === 0 && setStockError(true);
+    formData.price === 0 && setPriceError(true);
+
+    const totalStock = stock.reduce((total, item) => {
+      return { ...total, [item[0]]: parseInt(item[1]) };
+    }, {});
     if (mode === 'new') {
       //새 상품 만들기
+      console.log(formData);
+      dispatch(productActions.createProduct({ ...formData, stock: totalStock }));
+      setShowDialog(false);
     } else {
       // 상품 수정하기
     }
   };
 
   const handleChange = (event) => {
-    //form에 데이터 넣어주기
+    const { id, value } = event.target;
+    setFormData({ ...formData, [id]: value });
   };
 
   const addStock = () => {
-    //재고타입 추가시 배열에 새 배열 추가
+    setStock([...stock, []]);
   };
 
   const deleteStock = (idx) => {
-    //재고 삭제하기
+    const newStock = stock.filter((item, index) => index !== idx);
+    setStock(newStock);
   };
 
   const handleSizeChange = (value, index) => {
-    //  재고 사이즈 변환하기
+    const newStock = [...stock];
+    newStock[index][0] = value;
+    setStock(newStock);
   };
 
   const handleStockChange = (value, index) => {
-    //재고 수량 변환하기
+    const newStock = [...stock];
+    newStock[index][1] = value;
+    setStock(newStock);
   };
 
   const onHandleCategory = (event) => {
@@ -79,6 +108,7 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
 
   const uploadImage = (url) => {
     //이미지 업로드
+    setFormData({ ...formData, image: url });
   };
 
   useEffect(() => {
@@ -117,7 +147,7 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
 
         <Form.Group className="mb-3" controlId="stock">
           <Form.Label className="mr-1">Stock</Form.Label>
-          {stockError && <span className="error-message">재고를 추가해주세요</span>}
+          {stockError && <span className="error-message">Please add stock</span>}
           <Button size="sm" onClick={addStock}>
             Add +
           </Button>
@@ -159,12 +189,13 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
           <Form.Label>Image</Form.Label>
           <CloudinaryUploadWidget uploadImage={uploadImage} />
 
-          <img id="uploadedimage" src={formData.image} className="upload-image mt-2" alt="uploadedimage"></img>
+          <img id="uploadedimage" src={formData.image} className="upload-image mt-2" alt="uploadedimage" />
         </Form.Group>
 
         <Row className="mb-3">
           <Form.Group as={Col} controlId="price">
             <Form.Label>Price</Form.Label>
+            {priceError && <span className="error-message">Please enter price</span>}
             <Form.Control value={formData.price} required onChange={handleChange} type="number" placeholder="0" />
           </Form.Group>
 
@@ -204,4 +235,9 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
   );
 };
 
+NewItemDialog.prototype = {
+  mode: PropTypes.bool.isRequired,
+  showDialog: PropTypes.bool.isRequired,
+  setShowDialog: PropTypes.func.isRequired,
+};
 export default NewItemDialog;
