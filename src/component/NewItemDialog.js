@@ -52,16 +52,18 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
     stock.length === 0 && setStockError(true);
     formData.price === 0 && setPriceError(true);
 
-    const totalStock = stock.reduce((total, item) => {
-      return { ...total, [item[0]]: parseInt(item[1]) };
-    }, {});
-    if (mode === 'new') {
-      //새 상품 만들기
-      console.log(formData);
-      dispatch(productActions.createProduct({ ...formData, stock: totalStock }));
-      setShowDialog(false);
-    } else {
-      // 상품 수정하기
+    if (!stockError && !priceError) {
+      const totalStock = stock.reduce((total, item) => {
+        return { ...total, [item[0]]: parseInt(item[1]) };
+      }, {});
+      if (mode === 'new') {
+        //새 상품 만들기
+        console.log(formData);
+        dispatch(productActions.createProduct({ ...formData, stock: totalStock }));
+        setShowDialog(false);
+      } else {
+        // 상품 수정하기
+      }
     }
   };
 
