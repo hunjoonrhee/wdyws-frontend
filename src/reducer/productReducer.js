@@ -8,7 +8,6 @@ const initialState = {
 function productReducer(state = initialState, action) {
   switch (action.type) {
     case types.PRODUCT_GET_SUCCESS:
-      console.log(action.payload);
       return {
         ...state,
         products: action.payload,
@@ -19,7 +18,6 @@ function productReducer(state = initialState, action) {
         getProductError: action.payload,
       };
     case types.PRODUCT_CREATE_SUCCESS:
-      console.log(action.payload);
       return {
         ...state,
         products: [...state.products, action.payload],

@@ -25,7 +25,6 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
   const [stock, setStock] = useState([]);
   const dispatch = useDispatch();
   const [stockError, setStockError] = useState(false);
-  const [priceError, setPriceError] = useState(false);
   const handleClose = () => {
     //모든걸 초기화시키고;
     setFormData({
@@ -39,31 +38,28 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
       price: 0,
     });
     // 다이얼로그 닫아주기
+    setStockError(false);
     setShowDialog(false);
   };
 
   useEffect(() => {
     stock.length !== 0 && setStockError(false);
-    formData.price !== 0 && setPriceError(false);
-  }, [stock, formData]);
+  }, [stock]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    stock.length === 0 && setStockError(true);
-    formData.price === 0 && setPriceError(true);
+    if (stock.length === 0) return setStockError(true);
 
-    if (!stockError && !priceError) {
-      const totalStock = stock.reduce((total, item) => {
-        return { ...total, [item[0]]: parseInt(item[1]) };
-      }, {});
-      if (mode === 'new') {
-        //새 상품 만들기
-        console.log(formData);
-        dispatch(productActions.createProduct({ ...formData, stock: totalStock }));
-        setShowDialog(false);
-      } else {
-        // 상품 수정하기
-      }
+    const totalStock = stock.reduce((total, item) => {
+      return { ...total, [item[0]]: parseInt(item[1]) };
+    }, {});
+    if (mode === 'new') {
+      //새 상품 만들기
+      dispatch(productActions.createProduct({ ...formData, stock: totalStock }));
+      setShowDialog(false);
+      setStockError(false);
+    } else {
+      // 상품 수정하기
     }
   };
 
@@ -197,7 +193,6 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
         <Row className="mb-3">
           <Form.Group as={Col} controlId="price">
             <Form.Label>Price</Form.Label>
-            {priceError && <span className="error-message">Please enter price</span>}
             <Form.Control value={formData.price} required onChange={handleChange} type="number" placeholder="0" />
           </Form.Group>
 
