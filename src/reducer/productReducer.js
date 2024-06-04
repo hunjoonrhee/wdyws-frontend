@@ -1,9 +1,12 @@
 import * as types from '../constants/product.constants';
 const initialState = {
   products: [],
+  product: {},
   createProductError: null,
   getProductError: null,
   deleteProductError: null,
+  editProductError: null,
+  getProductDetailError: null,
 };
 
 function productReducer(state = initialState, action) {
@@ -17,6 +20,16 @@ function productReducer(state = initialState, action) {
       return {
         ...state,
         getProductError: action.payload,
+      };
+    case types.GET_PRODUCT_DETAIL_SUCCESS:
+      return {
+        ...state,
+        product: action.payload,
+      };
+    case types.GET_PRODUCT_DETAIL_FAIL:
+      return {
+        ...state,
+        getProductDetailError: action.payload,
       };
     case types.PRODUCT_CREATE_SUCCESS:
       return {
@@ -37,6 +50,18 @@ function productReducer(state = initialState, action) {
       return {
         ...state,
         deleteProductError: action.payload,
+      };
+    case types.PRODUCT_EDIT_SUCCESS:
+      let editedProduct = { ...state.selectedProduct, ...action.payload };
+      let newProducts = state.products.map((product) => (product.sku === editedProduct.sku ? editedProduct : product));
+      return {
+        ...state,
+        products: newProducts,
+      };
+    case types.PRODUCT_EDIT_FAIL:
+      return {
+        ...state,
+        editProductError: action.payload,
       };
     default:
       return state;

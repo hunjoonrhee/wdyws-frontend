@@ -7,7 +7,6 @@ const getProductList = (query) => async (dispatch) => {
   try {
     dispatch({ type: types.PRODUCT_GET_REQUEST });
     const response = await api.get('/product');
-    console.log('response', response);
     dispatch({ type: types.PRODUCT_GET_SUCCESS, payload: response.data });
   } catch (err) {
     dispatch({ type: types.PRODUCT_GET_FAIL, payload: err });
@@ -15,7 +14,17 @@ const getProductList = (query) => async (dispatch) => {
     console.error(err);
   }
 };
-const getProductDetail = (id) => async (dispatch) => {};
+const getProductDetail = (sku) => async (dispatch) => {
+  try {
+    dispatch({ type: types.GET_PRODUCT_DETAIL_REQUEST });
+    const response = await api.get(`/product/${sku}`);
+    dispatch({ type: types.GET_PRODUCT_DETAIL_SUCCESS, payload: response.data });
+  } catch (err) {
+    dispatch({ type: types.GET_PRODUCT_DETAIL_FAIL, payload: err });
+    dispatch(commonUiActions.showToastMessage(err, 'error'));
+    console.error(err);
+  }
+};
 
 const createProduct = (formData) => async (dispatch) => {
   try {
@@ -43,7 +52,19 @@ const deleteProduct = (sku) => async (dispatch) => {
   }
 };
 
-const editProduct = (formData, id) => async (dispatch) => {};
+const editProduct = (formData, sku) => async (dispatch) => {
+  try {
+    dispatch({ type: types.PRODUCT_EDIT_REQUEST });
+    await api.put(`/product/${sku}`, formData);
+    dispatch({ type: types.PRODUCT_EDIT_SUCCESS, payload: sku });
+    dispatch(commonUiActions.showToastMessage('product is successfully edited!', 'success'));
+    dispatch(getProductList());
+  } catch (err) {
+    dispatch({ type: types.PRODUCT_EDIT_FAIL, payload: err });
+    dispatch(commonUiActions.showToastMessage(err, 'error'));
+    console.error(err);
+  }
+};
 
 export const productActions = {
   getProductList,

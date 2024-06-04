@@ -17,14 +17,14 @@ const loginWithToken = () => async (dispatch) => {
   } catch (error) {
     dispatch({ type: types.LOGIN_WITH_TOKEN_FAIL });
     dispatch(logout());
-    console.log(error);
+    console.error(error);
   }
 };
 const loginWithEmail = (payload) => async (dispatch) => {
   try {
     dispatch({ type: types.LOGIN_REQUEST });
     const response = await api.post('/user/login', payload);
-    dispatch({ type: types.LOGIN_SUCCESS, payload: response.data });
+    dispatch({ type: types.LOGIN_SUCCESS, payload: response.data.user });
     dispatch(commonUiActions.showToastMessage('Log in succeed! Happy shopping!', 'success'));
     sessionStorage.setItem('token', response.data.token);
   } catch (err) {

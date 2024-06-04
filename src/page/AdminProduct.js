@@ -16,6 +16,7 @@ const AdminProduct = () => {
   const [query, setQuery] = useSearchParams();
   const dispatch = useDispatch();
   const [showDialog, setShowDialog] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState({});
   const [searchQuery, setSearchQuery] = useState({
     page: query.get('page') || 1,
     name: query.get('name') || '',
@@ -38,8 +39,9 @@ const AdminProduct = () => {
   };
 
   const openEditForm = (product) => {
-    //edit모드로 설정하고
-    // 아이템 수정다이얼로그 열어주기
+    setMode('edit');
+    setShowDialog(true);
+    setSelectedProduct(product);
   };
 
   const handleClickNewItem = () => {
@@ -86,7 +88,7 @@ const AdminProduct = () => {
         />
       </Container>
 
-      <NewItemDialog mode={mode} showDialog={showDialog} setShowDialog={setShowDialog} />
+      <NewItemDialog mode={mode} showDialog={showDialog} setShowDialog={setShowDialog} selectedProduct={selectedProduct} />
     </div>
   );
 };

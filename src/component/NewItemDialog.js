@@ -19,9 +19,9 @@ const InitialFormData = {
   status: 'active',
   price: 0,
 };
-const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
-  const selectedProduct = useSelector((state) => state.product.selectedProduct);
-  const [formData, setFormData] = useState(mode === 'new' ? { ...InitialFormData } : selectedProduct);
+const NewItemDialog = ({ mode, showDialog, setShowDialog, selectedProduct }) => {
+  // const selectedProduct = useSelector((state) => state.product.selectedProduct);
+  const [formData, setFormData] = useState(mode === 'new' && { ...InitialFormData });
   const [stock, setStock] = useState([]);
   const dispatch = useDispatch();
   const [stockError, setStockError] = useState(false);
@@ -60,6 +60,9 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
       setStockError(false);
     } else {
       // 상품 수정하기
+      dispatch(productActions.editProduct({ ...formData, stock: totalStock }, selectedProduct?.sku));
+      setShowDialog(false);
+      setStockError(false);
     }
   };
 
@@ -113,8 +116,12 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
     if (showDialog) {
       if (mode === 'edit') {
         // 선택된 데이터값 불러오기 (재고 형태 객체에서 어레이로 바꾸기)
+        const stockArray = Object.keys(selectedProduct?.stock).map((key) => [key, selectedProduct?.stock[key]]);
+        setStock(stockArray);
+        setFormData(selectedProduct);
       } else {
         // 초기화된 값 불러오기
+        setStock([]);
       }
     }
   }, [showDialog]);
@@ -129,7 +136,7 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
         <Row className="mb-3">
           <Form.Group as={Col} controlId="sku">
             <Form.Label>Sku</Form.Label>
-            <Form.Control onChange={handleChange} type="string" placeholder="Enter Sku" required value={formData.sku} />
+            <Form.Control onChange={handleChange} type="string" placeholder="Enter Sku" required value={formData.sku} disabled={mode !== 'new'} />
           </Form.Group>
 
           <Form.Group as={Col} controlId="name">
@@ -236,5 +243,6 @@ NewItemDialog.prototype = {
   mode: PropTypes.bool.isRequired,
   showDialog: PropTypes.bool.isRequired,
   setShowDialog: PropTypes.func.isRequired,
+  selectedProduct: PropTypes.object,
 };
 export default NewItemDialog;
