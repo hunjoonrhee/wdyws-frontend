@@ -63,6 +63,16 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog, selectedProduct }) => 
       dispatch(productActions.editProduct({ ...formData, stock: totalStock }, selectedProduct?.sku));
       setShowDialog(false);
       setStockError(false);
+      setFormData({
+        name: '',
+        sku: '',
+        stock: {},
+        image: '',
+        description: '',
+        category: [],
+        status: 'active',
+        price: 0,
+      });
     }
   };
 
