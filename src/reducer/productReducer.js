@@ -3,6 +3,7 @@ const initialState = {
   products: [],
   createProductError: null,
   getProductError: null,
+  deleteProductError: null,
 };
 
 function productReducer(state = initialState, action) {
@@ -26,6 +27,16 @@ function productReducer(state = initialState, action) {
       return {
         ...state,
         createProductError: action.payload,
+      };
+    case types.PRODUCT_DELETE_SUCCESS:
+      return {
+        ...state,
+        products: state.products.filter((p) => p.sku !== action.payload),
+      };
+    case types.PRODUCT_DELETE_FAIL:
+      return {
+        ...state,
+        deleteProductError: action.payload,
       };
     default:
       return state;

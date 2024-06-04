@@ -21,7 +21,6 @@ const createProduct = (formData) => async (dispatch) => {
   try {
     dispatch({ type: types.PRODUCT_CREATE_REQUEST });
     const response = await api.post('/product', formData);
-    console.log('response', response);
     dispatch({ type: types.PRODUCT_CREATE_SUCCESS, payload: response.data });
     dispatch(commonUiActions.showToastMessage('creating a new product succeed!', 'success'));
   } catch (err) {
@@ -30,7 +29,19 @@ const createProduct = (formData) => async (dispatch) => {
     console.error(err);
   }
 };
-const deleteProduct = (id) => async (dispatch) => {};
+const deleteProduct = (sku) => async (dispatch) => {
+  try {
+    dispatch({ type: types.PRODUCT_DELETE_REQUEST });
+    await api.delete(`/product/${sku}`);
+    dispatch({ type: types.PRODUCT_DELETE_SUCCESS, payload: sku });
+    dispatch(commonUiActions.showToastMessage('product is successfully deleted!', 'success'));
+    dispatch(getProductList());
+  } catch (err) {
+    dispatch({ type: types.PRODUCT_DELETE_FAIL, payload: err });
+    dispatch(commonUiActions.showToastMessage(err, 'error'));
+    console.error(err);
+  }
+};
 
 const editProduct = (formData, id) => async (dispatch) => {};
 

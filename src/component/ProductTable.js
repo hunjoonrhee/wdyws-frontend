@@ -33,7 +33,7 @@ const ProductTable = ({ header, data, deleteItem, openEditForm }) => {
                 </th>
                 <th>{item.status}</th>
                 <th style={{ minWidth: '100px' }}>
-                  <Button size="sm" variant="danger" onClick={() => deleteItem(item._id)} className="mr-1">
+                  <Button size="sm" variant="danger" onClick={() => deleteItem(item.sku)} className="mr-1">
                     -
                   </Button>
                   <Button size="sm" onClick={() => openEditForm(item)}>
