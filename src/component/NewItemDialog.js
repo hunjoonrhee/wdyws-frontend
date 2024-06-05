@@ -41,7 +41,6 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog, selectedProduct, searc
     setStockError(false);
     setShowDialog(false);
   };
-  console.log('SSS', editProductSuccess);
 
   useEffect(() => {
     if (createProductSuccess || editProductSuccess) {
