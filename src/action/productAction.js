@@ -57,8 +57,8 @@ const deleteProduct = (sku) => async (dispatch) => {
 const editProduct = (formData, sku) => async (dispatch) => {
   try {
     dispatch({ type: types.PRODUCT_EDIT_REQUEST });
-    await api.put(`/product/${sku}`, formData);
-    dispatch({ type: types.PRODUCT_EDIT_SUCCESS, payload: sku });
+    const response = await api.put(`/product/${sku}`, formData);
+    dispatch({ type: types.PRODUCT_EDIT_SUCCESS, payload: response.data });
     dispatch(commonUiActions.showToastMessage('product is successfully edited!', 'success'));
     dispatch(getProductList());
   } catch (err) {

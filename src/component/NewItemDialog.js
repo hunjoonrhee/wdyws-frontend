@@ -20,7 +20,7 @@ const InitialFormData = {
   price: 0,
 };
 const NewItemDialog = ({ mode, showDialog, setShowDialog, selectedProduct, searchQuery }) => {
-  const { createProductSuccess } = useSelector((state) => state.product);
+  const { createProductSuccess, editProductSuccess } = useSelector((state) => state.product);
   const [formData, setFormData] = useState(mode === 'new' && { ...InitialFormData });
   const [stock, setStock] = useState([]);
   const dispatch = useDispatch();
@@ -41,12 +41,13 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog, selectedProduct, searc
     setStockError(false);
     setShowDialog(false);
   };
+  console.log('SSS', editProductSuccess);
 
   useEffect(() => {
-    if (createProductSuccess) {
+    if (createProductSuccess || editProductSuccess) {
       dispatch(productActions.getProductList({ ...searchQuery }));
     }
-  }, [createProductSuccess]);
+  }, [createProductSuccess, editProductSuccess]);
 
   useEffect(() => {
     stock.length !== 0 && setStockError(false);

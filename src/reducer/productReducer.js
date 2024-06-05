@@ -9,6 +9,7 @@ const initialState = {
   getProductsError: null,
   deleteProductError: null,
   editProductError: null,
+  editProductSuccess: null,
   getProductDetailError: null,
 };
 
@@ -20,6 +21,8 @@ function productReducer(state = initialState, action) {
         products: action.payload.data,
         totalPageNum: action.payload.totalPageNum,
         pageSize: action.payload.pageSize,
+        editProductSuccess: null,
+        createProductSuccess: null,
       };
     case types.PRODUCT_GET_FAIL:
       return {
@@ -58,15 +61,17 @@ function productReducer(state = initialState, action) {
         deleteProductError: action.payload,
       };
     case types.PRODUCT_EDIT_SUCCESS:
-      let editedProduct = { ...state.selectedProduct, ...action.payload };
+      let editedProduct = { ...state.selectedProduct, ...action.payload.data };
       let newProducts = state.products.map((product) => (product.sku === editedProduct.sku ? editedProduct : product));
       return {
         ...state,
         products: newProducts,
+        editProductSuccess: action.payload.status,
       };
     case types.PRODUCT_EDIT_FAIL:
       return {
         ...state,
+        editProductSuccess: null,
         editProductError: action.payload,
       };
     default:
