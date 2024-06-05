@@ -6,11 +6,13 @@ import { commonUiActions } from './commonUiAction';
 const getProductList = (query) => async (dispatch) => {
   try {
     dispatch({ type: types.PRODUCT_GET_REQUEST });
-    const response = await api.get('/product');
+    const response = await api.get('/product', {
+      params: { ...query },
+    });
     dispatch({ type: types.PRODUCT_GET_SUCCESS, payload: response.data });
   } catch (err) {
     dispatch({ type: types.PRODUCT_GET_FAIL, payload: err });
-    dispatch(commonUiActions.showToastMessage(err, 'error'));
+    dispatch(commonUiActions.showToastMessage(err.message, 'error'));
     console.error(err);
   }
 };

@@ -9,10 +9,14 @@ import ReactPaginate from 'react-paginate';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { commonUiActions } from '../action/commonUiAction';
 import ProductTable from '../component/ProductTable';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { IconContext } from 'react-icons';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { AiFillLeftCircle, AiFillRightCircle } from 'react-icons/ai';
 
 const AdminProduct = () => {
   const navigate = useNavigate();
-  const { products } = useSelector((state) => state.product);
+  const { products, totalPageNum, pageSize } = useSelector((state) => state.product);
   const [query, setQuery] = useSearchParams();
   const dispatch = useDispatch();
   const [showDialog, setShowDialog] = useState(false);
@@ -27,11 +31,17 @@ const AdminProduct = () => {
 
   //상품리스트 가져오기 (url쿼리 맞춰서)
   useEffect(() => {
-    dispatch(productActions.getProductList());
-  }, []);
+    dispatch(productActions.getProductList({ ...searchQuery }));
+  }, [query]);
 
   useEffect(() => {
     //검색어나 페이지가 바뀌면 url바꿔주기 (검색어또는 페이지가 바뀜 => url 바꿔줌=> url쿼리 읽어옴=> 이 쿼리값 맞춰서  상품리스트 가져오기)
+    if (!searchQuery.name) {
+      delete searchQuery.name;
+    }
+    const params = new URLSearchParams(searchQuery);
+    const query = params.toString();
+    navigate('?' + query);
   }, [searchQuery]);
 
   const deleteItem = (sku) => {
@@ -52,13 +62,14 @@ const AdminProduct = () => {
 
   const handlePageClick = ({ selected }) => {
     //  쿼리에 페이지값 바꿔주기
+    setSearchQuery({ ...searchQuery, page: selected + 1 });
   };
 
   return (
     <div className="locate-center">
       <Container>
         <div className="mt-2">
-          <SearchBox searchQuery={searchQuery} setSearchQuery={setSearchQuery} placeholder="제품 이름으로 검색" field="name" />
+          <SearchBox searchQuery={searchQuery} setSearchQuery={setSearchQuery} placeholder="Search with product name" field="name" />
         </div>
         <Button className="mt-2 mb-2" onClick={handleClickNewItem}>
           Add New Item +
@@ -66,12 +77,19 @@ const AdminProduct = () => {
 
         <ProductTable header={tableHeader} data={products} deleteItem={deleteItem} openEditForm={openEditForm} />
         <ReactPaginate
-          nextLabel="next >"
+          nextLabel={
+            <IconContext.Provider value={{ color: '#B8C1CC', size: '36px' }}>
+              <AiFillRightCircle />
+            </IconContext.Provider>
+          }
           onPageChange={handlePageClick}
-          pageRangeDisplayed={5}
-          pageCount={100}
-          forcePage={2} // 1페이지면 2임 여긴 한개씩 +1 해야함
-          previousLabel="< previous"
+          pageRangeDisplayed={pageSize}
+          pageCount={totalPageNum}
+          previousLabel={
+            <IconContext.Provider value={{ color: '#B8C1CC', size: '36px' }}>
+              <AiFillLeftCircle />
+            </IconContext.Provider>
+          }
           renderOnZeroPageCount={null}
           pageClassName="page-item"
           pageLinkClassName="page-link"
@@ -88,7 +106,7 @@ const AdminProduct = () => {
         />
       </Container>
 
-      <NewItemDialog mode={mode} showDialog={showDialog} setShowDialog={setShowDialog} selectedProduct={selectedProduct} />
+      <NewItemDialog mode={mode} showDialog={showDialog} setShowDialog={setShowDialog} selectedProduct={selectedProduct} searchQuery={searchQuery} />
     </div>
   );
 };

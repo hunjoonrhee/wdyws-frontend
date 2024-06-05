@@ -2,8 +2,11 @@ import * as types from '../constants/product.constants';
 const initialState = {
   products: [],
   product: {},
+  totalPageNum: 0,
+  pageSize: 0,
   createProductError: null,
-  getProductError: null,
+  createProductSuccess: null,
+  getProductsError: null,
   deleteProductError: null,
   editProductError: null,
   getProductDetailError: null,
@@ -14,12 +17,14 @@ function productReducer(state = initialState, action) {
     case types.PRODUCT_GET_SUCCESS:
       return {
         ...state,
-        products: action.payload,
+        products: action.payload.data,
+        totalPageNum: action.payload.totalPageNum,
+        pageSize: action.payload.pageSize,
       };
     case types.PRODUCT_GET_FAIL:
       return {
         ...state,
-        getProductError: action.payload,
+        getProductsError: action.payload,
       };
     case types.GET_PRODUCT_DETAIL_SUCCESS:
       return {
@@ -35,6 +40,7 @@ function productReducer(state = initialState, action) {
       return {
         ...state,
         products: [...state.products, action.payload],
+        createProductSuccess: action.payload.status,
       };
     case types.PRODUCT_CREATE_FAIL:
       return {

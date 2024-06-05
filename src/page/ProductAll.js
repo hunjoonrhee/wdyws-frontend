@@ -5,18 +5,27 @@ import { useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { productActions } from '../action/productAction';
 import { commonUiActions } from '../action/commonUiAction';
+import ToastMessage from '../component/ToastMessage';
 
 const ProductAll = () => {
   const dispatch = useDispatch();
-  const error = useSelector((state) => state.product.error);
+  const { products } = useSelector((state) => state.product);
   // 처음 로딩하면 상품리스트 불러오기
+
+  useEffect(() => {
+    dispatch(productActions.getProductList());
+  }, []);
 
   return (
     <Container>
       <Row>
-        <Col md={3} sm={12}>
-          <ProductCard />
-        </Col>
+        {products.map((p) => {
+          return (
+            <Col sm={12} md={3}>
+              <ProductCard product={p} key={p._id} />
+            </Col>
+          );
+        })}
       </Row>
     </Container>
   );
