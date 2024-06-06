@@ -35,6 +35,7 @@ const loginWithEmail = (payload) => async (dispatch) => {
 const logout = () => async (dispatch) => {
   try {
     dispatch({ type: types.LOGOUT });
+    dispatch(commonUiActions.showToastMessage('Good bye!', 'success'));
     sessionStorage.removeItem('token');
   } catch (err) {
     console.error(err);
