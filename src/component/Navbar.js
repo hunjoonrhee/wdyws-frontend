@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
 import { faBars, faBox, faSearch, faShoppingBag } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { userActions } from '../action/userAction';
 import { cartActions } from '../action/cartAction';
+import { productActions } from '../action/productAction';
 
 const Navbar = ({ user }) => {
   const dispatch = useDispatch();
@@ -16,14 +17,32 @@ const Navbar = ({ user }) => {
   const menuList = ['여성', 'Divided', '남성', '신생아/유아', '아동', 'H&M HOME', 'Sale', '지속가능성'];
   let [width, setWidth] = useState(0);
   let navigate = useNavigate();
+  const [query] = useSearchParams();
+  let field = 'name';
+  const [keyword, setKeyword] = useState(query.get(field) || '');
+  const [searchQuery, setSearchQuery] = useState({
+    name: query.get('name') || '',
+  });
+
   const onCheckEnter = (event) => {
     if (event.key === 'Enter') {
-      if (event.target.value === '') {
-        return navigate('/');
-      }
-      navigate(`?name=${event.target.value}`);
+      setSearchQuery({ ...searchQuery, [field]: event.target.value });
     }
   };
+
+  useEffect(() => {
+    if (!searchQuery.name) {
+      delete searchQuery.name;
+    }
+    const params = new URLSearchParams(searchQuery);
+    const query = params.toString();
+    navigate('?' + query);
+  }, [searchQuery]);
+
+  useEffect(() => {
+    dispatch(productActions.getProductList({ ...searchQuery }));
+  }, [query]);
+
   const logout = () => {
     dispatch(userActions.logout());
   };
@@ -35,7 +54,7 @@ const Navbar = ({ user }) => {
           <div className="search display-space-between w-100">
             <div>
               <FontAwesomeIcon className="search-icon" icon={faSearch} />
-              <input type="text" placeholder="제품검색" onKeyPress={onCheckEnter} />
+              <input type="text" placeholder="제품검색" onKeyPress={onCheckEnter} onChange={(event) => setKeyword(event.target.value)} value={keyword} />
             </div>
             <button className="closebtn" onClick={() => setShowSearchBox(false)}>
               &times;
