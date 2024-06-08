@@ -12,7 +12,7 @@ const initialState = {
 function cartReducer(state = initialState, action) {
   switch (action.type) {
     case types.GET_CART_LIST_SUCCESS:
-      const cartItems = typeof action.payload === 'string' ? [] : action.payload.cartItems;
+      const cartItems = action.payload === '' ? [] : action.payload.cart.cartItems;
       return {
         ...state,
         cartItems: cartItems,

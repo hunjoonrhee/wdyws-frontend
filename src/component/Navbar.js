@@ -45,7 +45,12 @@ const Navbar = ({ user }) => {
 
   const logout = () => {
     dispatch(userActions.logout());
+    navigate('/');
   };
+
+  useEffect(() => {
+    dispatch(cartActions.getCartList());
+  }, [user]);
 
   const onClickCart = () => {
     if (!user) {

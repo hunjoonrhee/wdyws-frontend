@@ -21,8 +21,7 @@ const getCartList = () => async (dispatch) => {
   try {
     dispatch({ type: types.GET_CART_LIST_REQUEST });
     const response = await api.get('/cart');
-    console.log('response', response);
-    dispatch({ type: types.GET_CART_LIST_SUCCESS, payload: response.data.cart });
+    dispatch({ type: types.GET_CART_LIST_SUCCESS, payload: response.data });
   } catch (err) {
     dispatch({ type: types.GET_CART_LIST_FAIL, payload: err });
     dispatch(commonUiActions.showToastMessage(err, 'error'));
@@ -57,6 +56,7 @@ const updateQty = (item) => async (dispatch) => {
   }
 };
 const getCartQty = () => async (dispatch) => {};
+
 export const cartActions = {
   addToCart,
   getCartList,
