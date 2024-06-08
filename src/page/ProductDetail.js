@@ -40,12 +40,12 @@ const ProductDetail = () => {
         quantity: 1,
       }),
     );
-    setSizeError(false);
     // 카트에 아이템 추가하기
   };
   const selectSize = (value) => {
     // 사이즈 추가하기
     setSize(value);
+    setSizeError(false);
   };
 
   //카트에러가 있으면 에러메세지 보여주기
