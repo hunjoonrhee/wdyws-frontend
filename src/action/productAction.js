@@ -19,6 +19,7 @@ const getProductList = (query) => async (dispatch) => {
 const getProductDetail = (sku) => async (dispatch) => {
   try {
     dispatch({ type: types.GET_PRODUCT_DETAIL_REQUEST });
+    console.log('SKU', sku);
     const response = await api.get(`/product/${sku}`);
     dispatch({ type: types.GET_PRODUCT_DETAIL_SUCCESS, payload: response.data });
   } catch (err) {

@@ -27,7 +27,7 @@ const ProductDetail = () => {
   const addItemToCart = () => {
     //사이즈를 아직 선택안했다면 에러
     if (!size) {
-      sizeError(true);
+      setSizeError(true);
     }
     if (!user) {
       navigate('/login');
@@ -37,8 +37,10 @@ const ProductDetail = () => {
       cartActions.addToCart({
         productId: product._id,
         size: size,
+        quantity: 1,
       }),
     );
+    setSizeError(false);
     // 카트에 아이템 추가하기
   };
   const selectSize = (value) => {

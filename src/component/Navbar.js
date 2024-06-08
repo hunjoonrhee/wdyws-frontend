@@ -47,6 +47,14 @@ const Navbar = ({ user }) => {
     dispatch(userActions.logout());
   };
 
+  const onClickCart = () => {
+    if (!user) {
+      navigate('/login');
+    } else {
+      navigate('/cart');
+    }
+  };
+
   return (
     <div>
       {showSearchBox && (
@@ -96,7 +104,7 @@ const Navbar = ({ user }) => {
                 {!isMobile && <span style={{ cursor: 'pointer' }}>Sign In</span>}
               </div>
             )}
-            <div onClick={() => navigate('/cart')} className="nav-icon">
+            <div onClick={onClickCart} className="nav-icon">
               <FontAwesomeIcon icon={faShoppingBag} />
               {!isMobile && <span style={{ cursor: 'pointer' }}>{`Cart (${cartItemCount || 0})`}</span>}
             </div>
@@ -129,7 +137,7 @@ const Navbar = ({ user }) => {
         {!isMobile && ( // admin페이지에서 같은 search-box스타일을 쓰고있음 그래서 여기서 서치박스 안보이는것 처리를 해줌
           <div className="search-box landing-search-box ">
             <FontAwesomeIcon icon={faSearch} />
-            <input type="text" placeholder="제품검색" onKeyPress={onCheckEnter} />
+            <input type="text" placeholder="제품검색" onKeyPress={onCheckEnter} onChange={(event) => setKeyword(event.target.value)} value={keyword} />
           </div>
         )}
       </div>

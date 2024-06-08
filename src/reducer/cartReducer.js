@@ -1,9 +1,12 @@
 import * as types from '../constants/cart.constants';
 
 const initialState = {
-  productsInCart: [],
+  cartItems: [],
   cartItemCount: 0,
   addToCartError: null,
+  getCartListError: null,
+  deleteCartItemError: null,
+  updateCartItemError: null,
 };
 
 function cartReducer(state = initialState, action) {
@@ -12,23 +15,43 @@ function cartReducer(state = initialState, action) {
       const cartItems = typeof action.payload === 'string' ? [] : action.payload.cartItems;
       return {
         ...state,
-        productsInCart: cartItems,
+        cartItems: cartItems,
         cartItemCount: cartItems.length,
       };
     case types.GET_CART_LIST_FAIL:
       return {
         ...state,
-        addToCartError: action.payload,
+        getCartListError: action.payload,
       };
     case types.ADD_TO_CART_SUCCESS:
       return {
         ...state,
-        productsInCart: [...state.productsInCart, action.payload],
+        cartItems: [...state.cartItems, action.payload],
       };
     case types.ADD_TO_CART_FAIL:
       return {
         ...state,
         addToCartError: action.payload,
+      };
+    case types.DELETE_CART_ITEM_SUCCESS:
+      return {
+        ...state,
+        cartItems: action.payload.cart.cartItems,
+      };
+    case types.DELETE_CART_ITEM_FAIL:
+      return {
+        ...state,
+        deleteCartItemError: action.payload,
+      };
+    case types.UPDATE_CART_ITEM_SUCCESS:
+      return {
+        ...state,
+        cartItems: action.payload.cart.cartItems,
+      };
+    case types.UPDATE_CART_ITEM_FAIL:
+      return {
+        ...state,
+        updateCartItemError: action.payload,
       };
     default:
       return state;
