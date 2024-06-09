@@ -91,9 +91,9 @@ const ProductDetail = () => {
             </Dropdown.Toggle>
 
             <Dropdown.Menu className="size-drop-down">
-              {/*{availableSize.map((size) => {*/}
-              {/*  return <Dropdown.Item eventKey={size.toUpperCase()}>{size.toUpperCase()}</Dropdown.Item>;*/}
-              {/*})}*/}
+              {availableSize.map((size) => {
+                return <Dropdown.Item eventKey={size.toUpperCase()}>{size.toUpperCase()}</Dropdown.Item>;
+              })}
             </Dropdown.Menu>
           </Dropdown>
           <div className="warning-message">{sizeError && 'Please select size'}</div>
