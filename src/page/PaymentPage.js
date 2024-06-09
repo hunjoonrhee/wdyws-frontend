@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import OrderReceipt from '../component/OrderReceipt';
-import PaymentForm from '../component/PaymentForm';
 import '../style/paymentPage.style.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { orderActions } from '../action/orderAction';
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { commonUiActions } from '../action/commonUiAction';
 import { cc_expires_format } from '../utils/number';
+import PaymentForm from '../component/PaymentForm';
+import { cartActions } from '../action/cartAction';
 
 const PaymentPage = () => {
   const dispatch = useDispatch();
+  const { cartItems, totalPrice } = useSelector((state) => state.cart);
 
   const [cardValue, setCardValue] = useState({
     cvc: '',
@@ -35,48 +36,77 @@ const PaymentPage = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    const { firstname, lastName, contact, address, city, zip } = shipInfo;
+    const data = {
+      totalPrice,
+      shipTo: { address, city, zip },
+      contact: { firstname, lastName, contact },
+      orderList: cartItems.map((item) => {
+        return {
+          productId: item.productId._id,
+          price: item.productId.price,
+          quantity: item.quantity,
+          size: item.size,
+        };
+      }),
+    };
     //오더 생성하가ㅣ
+    dispatch(orderActions.createOrder(data, navigate));
   };
 
   const handleFormChange = (event) => {
-    //shipInfo에 값 넣어주기
+    const { name, value } = event.target;
+    setShipInfo({ ...shipInfo, [name]: value });
   };
 
   const handlePaymentInfoChange = (event) => {
-    //카드정보 넣어주기
+    const { name, value } = event.target;
+    if (name === 'expiry') {
+      let newValue = cc_expires_format(value);
+      setCardValue((prev) => ({ ...prev, [name]: newValue }));
+      return;
+    }
+
+    setCardValue((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleInputFocus = (e) => {
     setCardValue({ ...cardValue, focus: e.target.name });
   };
   //카트에 아이템이 없다면 다시 카트페이지로 돌아가기 (결제할 아이템이 없으니 결제페이지로 가면 안됌)
+  useEffect(() => {
+    if (cartItems.length === 0) {
+      navigate('/cart');
+    }
+  }, [cartItems]);
+
   return (
     <Container>
       <Row>
         <Col lg={7}>
           <div>
-            <h2 className="mb-2">배송 주소</h2>
+            <h2 className="mb-2">Shipping address</h2>
             <div>
               <Form onSubmit={handleSubmit}>
                 <Row className="mb-3">
                   <Form.Group as={Col} controlId="lastName">
-                    <Form.Label>성</Form.Label>
+                    <Form.Label>Last Name</Form.Label>
                     <Form.Control type="text" onChange={handleFormChange} required name="lastName" />
                   </Form.Group>
 
                   <Form.Group as={Col} controlId="firstName">
-                    <Form.Label>이름</Form.Label>
+                    <Form.Label>First Name</Form.Label>
                     <Form.Control type="text" onChange={handleFormChange} required name="firstName" />
                   </Form.Group>
                 </Row>
 
                 <Form.Group className="mb-3" controlId="formGridAddress1">
-                  <Form.Label>연락처</Form.Label>
+                  <Form.Label>Contact</Form.Label>
                   <Form.Control placeholder="010-xxx-xxxxx" onChange={handleFormChange} required name="contact" />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formGridAddress2">
-                  <Form.Label>주소</Form.Label>
+                  <Form.Label>Address</Form.Label>
                   <Form.Control placeholder="Apartment, studio, or floor" onChange={handleFormChange} required name="address" />
                 </Form.Group>
 
@@ -93,18 +123,19 @@ const PaymentPage = () => {
                 </Row>
                 <div className="mobile-receipt-area">{/* <OrderReceipt /> */}</div>
                 <div>
-                  <h2 className="payment-title">결제 정보</h2>
+                  <h2 className="payment-title">Payment information</h2>
+                  <PaymentForm handleInputFocus={handleInputFocus} cardValue={cardValue} handlePaymentInfoChange={handlePaymentInfoChange} />
                 </div>
 
                 <Button variant="dark" className="payment-button pay-button" type="submit">
-                  결제하기
+                  Make payment
                 </Button>
               </Form>
             </div>
           </div>
         </Col>
         <Col lg={5} className="receipt-area">
-          {/* <OrderReceipt /> */}
+          <OrderReceipt cartItems={cartItems} totalPrice={totalPrice} />
         </Col>
       </Row>
     </Container>

@@ -82,7 +82,11 @@ const ProductDetail = () => {
 
             <Dropdown.Menu className="size-drop-down">
               {availableSize.map((size) => {
-                return <Dropdown.Item eventKey={size.toUpperCase()}>{size.toUpperCase()}</Dropdown.Item>;
+                return (
+                  <Dropdown.Item eventKey={size.toUpperCase()} disabled={product.stock[size.toUpperCase()] === 0}>
+                    {size.toUpperCase()}
+                  </Dropdown.Item>
+                );
               })}
             </Dropdown.Menu>
           </Dropdown>

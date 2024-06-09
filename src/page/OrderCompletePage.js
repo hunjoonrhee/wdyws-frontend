@@ -5,16 +5,28 @@ import { Link } from 'react-router-dom';
 import '../style/paymentPage.style.css';
 
 const OrderCompletePage = () => {
+  const { orderNumber } = useSelector((state) => state.order);
   //만약 주문번호가 없는상태로 이페이지에 왔다면 다시 메인페이지로 돌아가기
+  if (!orderNumber) {
+    return (
+      <Container className="confirmation-page">
+        <h1>Order Failed!</h1>
+        <div>
+          Go to the main page
+          <Link to="/"> Main Page</Link>
+        </div>
+      </Container>
+    );
+  }
   return (
     <Container className="confirmation-page">
       <img src="/image/greenCheck.png" width={100} className="check-image" alt="greenCheck.png" />
-      <h2>예약이 완료됬습니다!</h2>
-      <div>예약번호:"hard_code"</div>
+      <h2>Your order has been completed!</h2>
+      <div>Order number: {orderNumber}</div>
       <div>
-        예약 확인은 내 예약 메뉴에서 확인해주세요
+        To confirm your order, please check the My Order menu.
         <div className="text-align-center">
-          <Link to={'/account/purchase'}>내 예약 바로가기</Link>
+          <Link to={'/account/purchase'}>Go to my order</Link>
         </div>
       </div>
     </Container>

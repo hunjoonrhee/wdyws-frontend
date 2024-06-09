@@ -3,6 +3,7 @@ import * as types from '../constants/cart.constants';
 const initialState = {
   cartItems: [],
   cartItemCount: 0,
+  totalPrice: 0,
   addToCartError: null,
   getCartListError: null,
   deleteCartItemError: null,
@@ -13,10 +14,12 @@ function cartReducer(state = initialState, action) {
   switch (action.type) {
     case types.GET_CART_LIST_SUCCESS:
       const cartItems = action.payload === '' ? [] : action.payload.cart.cartItems;
+      const totalPrice = cartItems.length !== 0 && cartItems.reduce((total, item) => total + item.productId.price * item.quantity, 0);
       return {
         ...state,
         cartItems: cartItems,
         cartItemCount: cartItems.length,
+        totalPrice: totalPrice,
       };
     case types.GET_CART_LIST_FAIL:
       return {

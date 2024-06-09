@@ -9,7 +9,7 @@ import { productActions } from '../action/productAction';
 
 const CartPage = () => {
   const dispatch = useDispatch();
-  const { cartItems } = useSelector((state) => state.cart);
+  const { cartItems, totalPrice } = useSelector((state) => state.cart);
   const { product } = useSelector((state) => state.product);
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const CartPage = () => {
           )}
         </Col>
         <Col xs={12} md={5}>
-          <OrderReceipt cartItems={cartItems} />
+          <OrderReceipt cartItems={cartItems} totalPrice={totalPrice} />
         </Col>
       </Row>
     </Container>

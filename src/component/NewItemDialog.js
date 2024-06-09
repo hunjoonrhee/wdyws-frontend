@@ -177,12 +177,12 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog, selectedProduct, searc
             {stock.map((item, index) => (
               <Row key={index}>
                 <Col sm={4}>
-                  <Form.Select onChange={(event) => handleSizeChange(event.target.value, index)} required defaultValue={item[0] ? item[0].toLowerCase() : ''}>
+                  <Form.Select onChange={(event) => handleSizeChange(event.target.value, index)} required defaultValue={item[0] ? item[0].toUpperCase() : ''}>
                     <option value="" disabled selected hidden>
                       Please Choose...
                     </option>
                     {SIZE.map((item, index) => (
-                      <option invalid="true" value={item.toLowerCase()} disabled={stock.some((size) => size[0] === item.toLowerCase())} key={index}>
+                      <option invalid="true" value={item.toUpperCase()} disabled={stock.some((size) => size[0] === item.toUpperCase())} key={index}>
                         {item}
                       </option>
                     ))}
