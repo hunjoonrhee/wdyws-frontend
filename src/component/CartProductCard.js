@@ -41,7 +41,7 @@ const CartProductCard = ({ item }) => {
           </div>
 
           <div>
-            <strong>€ {totalPrice}</strong>
+            <strong>€ {item.productId.price}</strong>
           </div>
           <div>Size: {item.size}</div>
           <div>Total: € {totalPrice}</div>
