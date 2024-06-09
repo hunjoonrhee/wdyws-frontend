@@ -29,6 +29,7 @@ const CartPage = () => {
             </div>
           ) : (
             cartItems.map((i) => {
+              console.log('ITEM', i);
               return <CartProductCard item={i} key={i.sku} />;
             })
           )}
