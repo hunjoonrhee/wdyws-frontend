@@ -33,7 +33,7 @@ const CartPage = () => {
           )}
         </Col>
         <Col xs={12} md={5}>
-          <OrderReceipt />
+          <OrderReceipt cartItems={cartItems} />
         </Col>
       </Row>
     </Container>
