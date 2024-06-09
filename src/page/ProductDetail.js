@@ -61,6 +61,7 @@ const ProductDetail = () => {
   if (typeof product.stock === 'object' && product.stock !== null) {
     availableSize = Object.keys(product?.stock);
   }
+  console.log(product);
 
   return (
     <Container className="product-detail-card">
