@@ -24,7 +24,6 @@ const CartProductCard = ({ item }) => {
     dispatch(cartActions.deleteCartItem(item));
   };
 
-  console.log(item.productId.price);
   const totalPrice = item.productId.price * item.quantity;
 
   return (

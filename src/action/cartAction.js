@@ -22,7 +22,6 @@ const getCartList = () => async (dispatch) => {
     dispatch({ type: types.GET_CART_LIST_REQUEST });
     const response = await api.get('/cart');
     dispatch({ type: types.GET_CART_LIST_SUCCESS, payload: response.data });
-    console.log(response.data);
   } catch (err) {
     dispatch({ type: types.GET_CART_LIST_FAIL, payload: err });
     dispatch(commonUiActions.showToastMessage(err, 'error'));

@@ -17,7 +17,6 @@ const CartPage = () => {
     //카트리스트 불러오기
   }, []);
 
-  console.log('WTFFF', cartItems);
   return (
     <Container>
       <Row>
@@ -29,7 +28,6 @@ const CartPage = () => {
             </div>
           ) : (
             cartItems.map((i) => {
-              console.log('ITEM', i);
               return <CartProductCard item={i} key={i.sku} />;
             })
           )}

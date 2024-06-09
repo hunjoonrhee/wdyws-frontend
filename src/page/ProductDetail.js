@@ -38,7 +38,6 @@ const ProductDetail = () => {
   }
 
   const availableSize = getAvailableSizes(product?.stock);
-  console.log(availableSize);
   const navigate = useNavigate();
 
   const addItemToCart = () => {
@@ -64,15 +63,6 @@ const ProductDetail = () => {
     setSize(value);
     setSizeError(false);
   };
-
-  //카트에러가 있으면 에러메세지 보여주기
-
-  //에러가 있으면 에러메세지 보여주기
-
-  // if (typeof product.stock === 'object' && product.stock !== null) {
-  //   availableSize = Object.keys(product?.stock);
-  // }
-  // console.log(product);
 
   return (
     <Container className="product-detail-card">
