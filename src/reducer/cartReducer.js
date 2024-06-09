@@ -13,6 +13,7 @@ const initialState = {
 function cartReducer(state = initialState, action) {
   switch (action.type) {
     case types.GET_CART_LIST_SUCCESS:
+      console.log('XXXX', action.payload);
       const cartItems = action.payload === '' ? [] : action.payload.cart.cartItems;
       const totalPrice = cartItems.length !== 0 && cartItems.reduce((total, item) => total + item.productId.price * item.quantity, 0);
       return {
