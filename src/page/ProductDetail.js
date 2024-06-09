@@ -57,6 +57,8 @@ const ProductDetail = () => {
     dispatch(productActions.getProductDetail(sku));
   }, [sku]);
 
+  const availableSize = Object.keys(product.stock);
+
   return (
     <Container className="product-detail-card">
       <Row>
@@ -74,11 +76,9 @@ const ProductDetail = () => {
             </Dropdown.Toggle>
 
             <Dropdown.Menu className="size-drop-down">
-              <Dropdown.Item eventKey="XS">XS</Dropdown.Item>
-              <Dropdown.Item eventKey="S">S</Dropdown.Item>
-              <Dropdown.Item eventKey="M">M</Dropdown.Item>
-              <Dropdown.Item eventKey="L">L</Dropdown.Item>
-              <Dropdown.Item eventKey="XL">XL</Dropdown.Item>
+              {availableSize.map((size) => {
+                return <Dropdown.Item eventKey={size.toUpperCase()}>{size.toUpperCase()}</Dropdown.Item>;
+              })}
             </Dropdown.Menu>
           </Dropdown>
           <div className="warning-message">{sizeError && 'Please select size'}</div>
