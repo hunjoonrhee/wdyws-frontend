@@ -17,6 +17,7 @@ const CartPage = () => {
     //카트리스트 불러오기
   }, []);
 
+  console.log('WTFFF', cartItems);
   return (
     <Container>
       <Row>
