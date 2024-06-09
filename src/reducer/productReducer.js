@@ -19,7 +19,6 @@ function productReducer(state = initialState, action) {
       return {
         ...state,
         products: action.payload.data,
-        totalPageNum: action.payload.totalPageNum,
         pageSize: action.payload.pageSize,
         editProductSuccess: null,
         createProductSuccess: null,

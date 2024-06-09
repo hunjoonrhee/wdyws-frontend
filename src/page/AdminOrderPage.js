@@ -9,18 +9,19 @@ import * as types from '../constants/order.constants';
 import ReactPaginate from 'react-paginate';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { commonUiActions } from '../action/commonUiAction';
+import { IconContext } from 'react-icons';
+import { AiFillLeftCircle, AiFillRightCircle } from 'react-icons/ai';
 
 const AdminOrderPage = () => {
   const navigate = useNavigate();
   const [query, setQuery] = useSearchParams();
   const dispatch = useDispatch();
-  const orderList = useSelector((state) => state.order.orderList);
   const [searchQuery, setSearchQuery] = useState({
     page: query.get('page') || 1,
-    ordernum: query.get('ordernum') || '',
+    orderNum: query.get('orderNum') || '',
   });
   const [open, setOpen] = useState(false);
-  const totalPageNum = useSelector((state) => state.order.totalPageNum);
+  const { orderList, totalPageNum, pageSize } = useSelector((state) => state.order);
   const tableHeader = ['#', 'Order#', 'Order Date', 'User', 'Order Item', 'Address', 'Total Price', 'Status'];
 
   useEffect(() => {
@@ -28,8 +29,8 @@ const AdminOrderPage = () => {
   }, [query]);
 
   useEffect(() => {
-    if (searchQuery.ordernum === '') {
-      delete searchQuery.ordernum;
+    if (searchQuery.orderNum === '') {
+      delete searchQuery.orderNum;
     }
     const params = new URLSearchParams(searchQuery);
     const queryString = params.toString();
@@ -54,17 +55,24 @@ const AdminOrderPage = () => {
     <div className="locate-center">
       <Container>
         <div className="mt-2 display-center mb-2">
-          <SearchBox searchQuery={searchQuery} setSearchQuery={setSearchQuery} placeholder="오더번호" field="ordernum" />
+          <SearchBox searchQuery={searchQuery} setSearchQuery={setSearchQuery} placeholder="Order number" field="orderNum" />
         </div>
 
         <OrderTable header={tableHeader} data={orderList} openEditForm={openEditForm} />
         <ReactPaginate
-          nextLabel="next >"
+          nextLabel={
+            <IconContext.Provider value={{ color: '#B8C1CC', size: '36px' }}>
+              <AiFillRightCircle />
+            </IconContext.Provider>
+          }
           onPageChange={handlePageClick}
-          pageRangeDisplayed={5}
+          pageRangeDisplayed={pageSize}
           pageCount={totalPageNum}
-          forcePage={searchQuery.page - 1}
-          previousLabel="< previous"
+          previousLabel={
+            <IconContext.Provider value={{ color: '#B8C1CC', size: '36px' }}>
+              <AiFillLeftCircle />
+            </IconContext.Provider>
+          }
           renderOnZeroPageCount={null}
           pageClassName="page-item"
           pageLinkClassName="page-link"
