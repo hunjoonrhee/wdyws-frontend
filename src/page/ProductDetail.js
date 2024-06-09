@@ -27,7 +27,18 @@ const ProductDetail = () => {
   if (!product) {
     return;
   }
+  function getAvailableSizes(obj) {
+    const keysArr = [];
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        keysArr.push(key);
+      }
+    }
+    return keysArr;
+  }
 
+  const availableSize = getAvailableSizes(product?.stock);
+  console.log(availableSize);
   const navigate = useNavigate();
 
   const addItemToCart = () => {
@@ -58,7 +69,6 @@ const ProductDetail = () => {
 
   //에러가 있으면 에러메세지 보여주기
 
-  // let availableSize;
   // if (typeof product.stock === 'object' && product.stock !== null) {
   //   availableSize = Object.keys(product?.stock);
   // }
