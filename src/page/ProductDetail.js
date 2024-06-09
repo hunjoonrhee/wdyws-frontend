@@ -58,11 +58,11 @@ const ProductDetail = () => {
 
   //에러가 있으면 에러메세지 보여주기
 
-  let availableSize;
-  if (typeof product.stock === 'object' && product.stock !== null) {
-    availableSize = Object.keys(product?.stock);
-  }
-  console.log(product);
+  // let availableSize;
+  // if (typeof product.stock === 'object' && product.stock !== null) {
+  //   availableSize = Object.keys(product?.stock);
+  // }
+  // console.log(product);
 
   return (
     <Container className="product-detail-card">
@@ -81,9 +81,9 @@ const ProductDetail = () => {
             </Dropdown.Toggle>
 
             <Dropdown.Menu className="size-drop-down">
-              {availableSize.map((size) => {
-                return <Dropdown.Item eventKey={size.toUpperCase()}>{size.toUpperCase()}</Dropdown.Item>;
-              })}
+              {/*{availableSize.map((size) => {*/}
+              {/*  return <Dropdown.Item eventKey={size.toUpperCase()}>{size.toUpperCase()}</Dropdown.Item>;*/}
+              {/*})}*/}
             </Dropdown.Menu>
           </Dropdown>
           <div className="warning-message">{sizeError && 'Please select size'}</div>
