@@ -8,6 +8,9 @@ import { cartActions } from '../action/cartAction';
 const CartProductCard = ({ item }) => {
   const [amount, setAmount] = useState(item.quantity);
   const dispatch = useDispatch();
+  if (!item) {
+    return;
+  }
 
   const handleQtyChange = (event) => {
     setAmount(event.target.value);
@@ -21,6 +24,7 @@ const CartProductCard = ({ item }) => {
     dispatch(cartActions.deleteCartItem(item));
   };
 
+  console.log(item.productId.price);
   const totalPrice = item.productId.price * item.quantity;
 
   return (
