@@ -57,7 +57,7 @@ const ProductDetail = () => {
     dispatch(productActions.getProductDetail(sku));
   }, [sku]);
 
-  const availableSize = Object.keys(product.stock);
+  const availableSize = Object.keys(product?.stock);
 
   return (
     <Container className="product-detail-card">
