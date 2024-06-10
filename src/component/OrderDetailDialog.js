@@ -6,9 +6,10 @@ import '../style/adminOrder.style.css';
 import { ORDER_STATUS } from '../constants/order.constants';
 import { orderActions } from '../action/orderAction';
 import { currencyFormat } from '../utils/number';
+import { commonUiActions } from '../action/commonUiAction';
 
 const OrderDetailDialog = ({ open, handleClose }) => {
-  const selectedOrder = useSelector((state) => state.order.selectedOrder);
+  const { selectedOrder } = useSelector((state) => state.order);
   const [orderStatus, setOrderStatus] = useState(selectedOrder.status);
   const dispatch = useDispatch();
 
@@ -21,7 +22,7 @@ const OrderDetailDialog = ({ open, handleClose }) => {
   };
 
   if (!selectedOrder) {
-    return <></>;
+    dispatch(commonUiActions.showToastMessage('selected order not found!', 'error'));
   }
   return (
     <Modal show={open} onHide={handleClose}>
@@ -29,15 +30,15 @@ const OrderDetailDialog = ({ open, handleClose }) => {
         <Modal.Title>Order Detail</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <p>예약번호: {selectedOrder.orderNum}</p>
-        <p>주문날짜: {selectedOrder.createdAt.slice(0, 10)}</p>
-        <p>이메일: {selectedOrder.userId.email}</p>
-        <p>주소:{selectedOrder.shipTo.address + ' ' + selectedOrder.shipTo.city}</p>
+        <p>Order Num.: {selectedOrder.orderNum}</p>
+        <p>Order date: {selectedOrder.createdAt.slice(0, 10)}</p>
+        <p>Email: {selectedOrder.userId.email}</p>
+        <p>Address:{selectedOrder.shipTo.address + ' ' + selectedOrder.shipTo.city}</p>
         <p>
-          연락처:
+          Contact:
           {`${selectedOrder.contact.firstName + selectedOrder.contact.lastName} ${selectedOrder.contact.contact}`}
         </p>
-        <p>주문내역</p>
+        <p>Order Detail</p>
         <div className="overflow-x">
           <Table>
             <thead>
@@ -50,18 +51,18 @@ const OrderDetailDialog = ({ open, handleClose }) => {
               </tr>
             </thead>
             <tbody>
-              {selectedOrder.items.length > 0 &&
-                selectedOrder.items.map((item) => (
+              {selectedOrder.orderItems.length > 0 &&
+                selectedOrder.orderItems.map((item) => (
                   <tr key={item._id}>
                     <td>{item._id}</td>
                     <td>{item.productId.name}</td>
                     <td>{currencyFormat(item.price)}</td>
-                    <td>{item.qty}</td>
-                    <td>{currencyFormat(item.price * item.qty)}</td>
+                    <td>{item.quantity}</td>
+                    <td>{currencyFormat(item.price * item.quantity)}</td>
                   </tr>
                 ))}
               <tr>
-                <td colSpan={4}>총계:</td>
+                <td colSpan={4}>Total:</td>
                 <td>{currencyFormat(selectedOrder.totalPrice)}</td>
               </tr>
             </tbody>
@@ -80,9 +81,9 @@ const OrderDetailDialog = ({ open, handleClose }) => {
           </Form.Group>
           <div className="order-button-area">
             <Button variant="light" onClick={handleClose} className="order-button">
-              닫기
+              Close
             </Button>
-            <Button type="submit">저장</Button>
+            <Button type="submit">Save</Button>
           </div>
         </Form>
       </Modal.Body>

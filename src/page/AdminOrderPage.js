@@ -21,12 +21,12 @@ const AdminOrderPage = () => {
     orderNum: query.get('orderNum') || '',
   });
   const [open, setOpen] = useState(false);
-  const { orderList, totalPageNum, pageSize } = useSelector((state) => state.order);
+  const { orderList, totalPageNum, pageSize, updateOrderSuccess } = useSelector((state) => state.order);
   const tableHeader = ['#', 'Order#', 'Order Date', 'User', 'Order Item', 'Address', 'Total Price', 'Status'];
 
   useEffect(() => {
     dispatch(orderActions.getOrderList({ ...searchQuery }));
-  }, [query]);
+  }, [query, updateOrderSuccess]);
 
   useEffect(() => {
     if (searchQuery.orderNum === '') {

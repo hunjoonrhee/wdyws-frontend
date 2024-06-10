@@ -4,9 +4,12 @@ const initialState = {
   orderNumber: null,
   createOrderError: null,
   orderList: [],
-  myOrderList: [],
+  myOrders: [],
+  selectedOrder: {},
   getOrderListError: null,
   getMyOrderListError: null,
+  updateOrderError: null,
+  updateOrderSuccess: null,
   totalPageNum: 0,
   pageSize: 0,
 };
@@ -19,6 +22,7 @@ function orderReducer(state = initialState, action) {
         orderList: action.payload.response.data,
         pageSize: action.payload.response.pageSize,
         totalPageNum: action.payload.response.totalPageNum,
+        updateOrderSuccess: null,
       };
     case types.GET_ORDER_LIST_FAIL:
       return {
@@ -28,7 +32,7 @@ function orderReducer(state = initialState, action) {
     case types.GET_MY_ORDER_LIST_SUCCESS:
       return {
         ...state,
-        myOrderList: action.payload,
+        myOrders: action.payload.orders,
       };
     case types.GET_MY_ORDER_LIST_FAIL:
       return {
@@ -44,6 +48,22 @@ function orderReducer(state = initialState, action) {
       return {
         ...state,
         createOrderError: action.payload,
+      };
+    case types.UPDATE_ORDER_SUCCESS:
+      return {
+        ...state,
+        selectedOrder: action.payload.selectedOrder,
+        updateOrderSuccess: action.payload.status,
+      };
+    case types.UPDATE_ORDER_FAIL:
+      return {
+        ...state,
+        updateOrderError: action.payload,
+      };
+    case types.SET_SELECTED_ORDER:
+      return {
+        ...state,
+        selectedOrder: action.payload,
       };
     default:
       return state;

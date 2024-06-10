@@ -11,8 +11,10 @@ import ProductAll from '../page/ProductAll';
 import ProductDetail from '../page/ProductDetail';
 import RegisterPage from '../page/RegisterPage';
 import PrivateRoute from './PrivateRoute';
+import { useSelector } from 'react-redux';
 
 const AppRouter = () => {
+  const { user } = useSelector((state) => state.user);
   return (
     <Routes>
       <Route path="/" element={<ProductAll />} />
@@ -23,7 +25,7 @@ const AppRouter = () => {
         <Route path="/cart" element={<CartPage />} />
         <Route path="/payment" element={<PaymentPage />} />
         <Route path="/payment/success" element={<OrderCompletePage />} />
-        <Route path="/account/purchase" element={<MyPage />} />
+        <Route path="/account/purchase" element={<MyPage user={user} />} />
       </Route>
       <Route element={<PrivateRoute permissionLevel="admin" />}>
         <Route path="/admin/product" element={<AdminProduct />} />

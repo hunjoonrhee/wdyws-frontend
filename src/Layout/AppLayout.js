@@ -14,7 +14,6 @@ const AppLayout = ({ children }) => {
   const dispatch = useDispatch();
 
   const { user } = useSelector((state) => state.user);
-  const { cartItemCount } = useSelector((state) => state.cart);
   useEffect(() => {
     dispatch(userActions.loginWithToken());
   }, []);
