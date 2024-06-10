@@ -34,7 +34,7 @@ const OrderStatusCard = ({ order }) => {
 
           <div>
             {order.orderItems[0].productId.name}
-            {order.orderItems.length > 1 && `and ${item.orderItems.length - 1} pcs.`}
+            {order.orderItems.length > 1 && `and ${order.orderItems.length - 1} pcs.`}
           </div>
           <div>€ {order.orderItems[0].productId.price}</div>
         </Col>
