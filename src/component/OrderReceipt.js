@@ -21,7 +21,7 @@ const OrderReceipt = ({ cartItems, totalPrice }) => {
                   <div>{item.quantity} pcs.</div>
                 </div>
 
-                <div>€ {item.productId.price}</div>
+                <div>€ {item.productId.price * item.quantity}</div>
               </div>
             </li>
           );
