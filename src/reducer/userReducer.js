@@ -7,6 +7,16 @@ const initialState = {
 
 function userReducer(state = initialState, action) {
   switch (action.type) {
+    case types.GOOGLE_LOGIN_SUCCESS:
+      return {
+        ...state,
+        user: action.payload,
+      };
+    case types.GOOGLE_LOGIN_FAIL:
+      return {
+        ...state,
+        logInError: action.payload,
+      };
     case types.LOGIN_SUCCESS:
       return {
         ...state,

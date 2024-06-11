@@ -40,7 +40,19 @@ const logout = () => async (dispatch) => {
   }
 };
 
-const loginWithGoogle = (token) => async (dispatch) => {};
+const loginWithGoogle = (token) => async (dispatch) => {
+  try {
+    dispatch({ type: types.GOOGLE_LOGIN_REQUEST });
+    const response = await api.post('/user/googleLogin', { token });
+    dispatch({ type: types.GOOGLE_LOGIN_SUCCESS, payload: response.data.user });
+    sessionStorage.setItem('token', response.data.token);
+    dispatch(commonUiActions.showToastMessage('Log in succeed! Happy shopping!', 'success'));
+  } catch (err) {
+    dispatch({ type: types.GOOGLE_LOGIN_FAIL, payload: err });
+    dispatch(commonUiActions.showToastMessage(err.message, 'error'));
+    console.error(err);
+  }
+};
 
 const registerUser =
   ({ email, name, password }, navigate) =>
