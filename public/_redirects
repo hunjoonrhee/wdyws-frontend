@@ -1,1 +1,1 @@
-/api/* http://whatdoyouwannashopping.ap-northeast-2.elasticbeanstalk.com/api/:splat 200
+/api/* http://wdyws-app.ap-northeast-2.elasticbeanstalk.com/api/:splat 200
