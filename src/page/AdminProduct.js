@@ -15,7 +15,7 @@ import { AiFillLeftCircle, AiFillRightCircle } from 'react-icons/ai';
 const AdminProduct = () => {
   const navigate = useNavigate();
   const { products, totalPageNum, pageSize } = useSelector((state) => state.product);
-  const [query, setQuery] = useSearchParams();
+  const [query] = useSearchParams();
   const dispatch = useDispatch();
   const [showDialog, setShowDialog] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState({});
