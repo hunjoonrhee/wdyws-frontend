@@ -5,7 +5,6 @@ import { orderActions } from '../action/orderAction';
 import OrderStatusCard from '../component/OrderStatusCard';
 import '../style/orderStatus.style.css';
 import { useNavigate } from 'react-router-dom';
-import { commonUiActions } from '../action/commonUiAction';
 
 const MyPage = ({ user }) => {
   const dispatch = useDispatch();
@@ -23,9 +22,6 @@ const MyPage = ({ user }) => {
     }
   }, [token]);
 
-  //오더리스트 들고오기
-
-  // 오더리스트가 없다면? 주문한 상품이 없습니다 메세지 보여주기
   return (
     <Container className="status-card-container">
       {myOrders.length === 0 ? (
