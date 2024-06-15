@@ -20,6 +20,7 @@ function productReducer(state = initialState, action) {
         ...state,
         products: action.payload.data,
         pageSize: action.payload.pageSize,
+        totalPageNum: action.payload.totalPageNum,
         editProductSuccess: null,
         createProductSuccess: null,
       };
